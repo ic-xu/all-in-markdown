@@ -7,7 +7,6 @@ const App = dynamic(() => import('@/app/App'), {
 });
 
 export default function Home() {
-
-    return ( <App/>
+    return (<App />
     );
 }
