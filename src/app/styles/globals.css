@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+.prose {
+  @apply max-w-none;
+}
+
+.prose pre {
+  @apply bg-gray-50 p-4 rounded-lg;
+}
+
+.prose code {
+  @apply text-sm bg-gray-50 px-1 py-0.5 rounded;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.katex-display {
+  @apply overflow-x-auto overflow-y-hidden;
+  max-width: 100%;
+}
+
+.katex {
+  @apply text-current;
+  font-size: 1.1em;
+}
+
+.katex-display > .katex {
+  @apply my-4 mx-auto;
+  white-space: nowrap;
+}
+
+.katex-error {
+  @apply text-red-500 bg-red-50 dark:bg-red-900/20 p-2 rounded;
+}
