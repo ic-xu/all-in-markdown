@@ -1,14 +1,13 @@
 import React from 'react';
-import { Moon, Sun } from 'lucide-react';
 import type { Plugin } from '../../types/plugin';
-import { useEditorStore } from '../../store/editorStore';
+import { ThemeToggleButton } from './ThemeToggleButton';
 
 export const darkThemePlugin: Plugin = {
   id: 'dark-theme',
   name: 'Dark Theme',
   version: '1.0.0',
   description: 'Provides dark theme support',
-  
+
   async onActivate(context) {
     // Register dark theme
     context.registerTheme({
@@ -29,18 +28,7 @@ export const darkThemePlugin: Plugin = {
     context.registerToolbarItem({
       id: 'theme-toggle',
       position: 'right',
-      render: () => {
-        const { theme, setTheme } = useEditorStore();
-        return (
-          <button
-            onClick={() => setTheme(theme === 'default' ? 'dark' : 'default')}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
-            title={theme === 'default' ? 'Switch to Dark Theme' : 'Switch to Light Theme'}
-          >
-            {theme === 'default' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-          </button>
-        );
-      },
+      render: () => <ThemeToggleButton />,
     });
   },
 };

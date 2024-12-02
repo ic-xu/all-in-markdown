@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, Folder, FolderOpen, ChevronRight, ChevronDown, RefreshCcw, AlertCircle, Plus } from 'lucide-react';
 import { useEditorStore } from '../store/editorStore';
-import type { DocumentTreeItem } from '@/types';
+import type { DocumentTreeItem } from '@/app/types/document';
 
 interface TreeNodeProps {
   item: DocumentTreeItem;
@@ -15,7 +15,7 @@ function TreeNode({ item, level }: TreeNodeProps) {
   const [showActions, setShowActions] = useState(false);
   const [newItemName, setNewItemName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
-  const { loadFile, createDocument } = useEditorStore();
+  const { loadFile, createDocument, theme } = useEditorStore();
 
   const handleSelect = () => {
     if (item.type === 'file') {
@@ -36,6 +36,10 @@ function TreeNode({ item, level }: TreeNodeProps) {
     }
   };
 
+  const bgHoverClass = theme === 'green' ? 'hover:bg-emerald-800' : 'hover:bg-gray-100 dark:hover:bg-gray-700';
+  const selectedBgClass = theme === 'green' ? 'bg-emerald-800' : 'bg-blue-100 dark:bg-blue-900';
+  const textClass = theme === 'green' ? 'text-emerald-100' : 'text-gray-800 dark:text-gray-200';
+
   return (
     <div>
       <div
@@ -45,13 +49,13 @@ function TreeNode({ item, level }: TreeNodeProps) {
       >
         <div
           onClick={handleSelect}
-          className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer
-            ${item.id === item.id && item.type === 'file' ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200' : ''}
+          className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 ${bgHoverClass} cursor-pointer
+            ${item.id === item.id && item.type === 'file' ? selectedBgClass : ''}
             ${item.type === 'folder' ? 'font-medium' : ''}`}
           style={{ paddingLeft: `${(level + 1) * 12}px` }}
         >
           {item.type === 'folder' && (
-            <span 
+            <span
               onClick={(e) => {
                 e.stopPropagation();
                 setIsExpanded(!isExpanded);
@@ -74,9 +78,9 @@ function TreeNode({ item, level }: TreeNodeProps) {
           ) : (
             <FileText className="w-4 h-4 text-gray-500" />
           )}
-          <span className="truncate text-gray-800 dark:text-gray-200">{item.title}</span>
+          <span className={`truncate ${textClass}`}>{item.title}</span>
         </div>
-        
+
         {showActions && item.type === 'folder' && (
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1 bg-white dark:bg-gray-800 px-2 py-1 rounded-md shadow-sm">
             <button
@@ -134,7 +138,7 @@ function TreeNode({ item, level }: TreeNodeProps) {
           </button>
         </div>
       )}
-      
+
       {item.type === 'folder' && isExpanded && item.children.length > 0 && (
         <div className="ml-2">
           {item.children.map((child) => (
@@ -155,12 +159,18 @@ interface DocumentListProps {
 }
 
 export default function DocumentList({ documents }: DocumentListProps) {
-  const { loadDirectory, currentPath, isLoading, error } = useEditorStore();
+  const { loadDirectory, currentPath, isLoading, error, theme } = useEditorStore();
 
   useEffect(() => {
     if (currentPath)
       loadDirectory(currentPath);
   }, [currentPath]);
+
+  const bgClass = theme === 'green' ? 'bg-emerald-900' : 'bg-gray-50 dark:bg-gray-900';
+  const headerBgClass = theme === 'green' ? 'bg-emerald-800' : 'bg-white dark:bg-gray-800';
+  const borderClass = theme === 'green' ? 'border-emerald-700' : 'border-gray-200 dark:border-gray-700';
+  const textClass = theme === 'green' ? 'text-emerald-100' : 'text-gray-800 dark:text-gray-200';
+  const subTextClass = theme === 'green' ? 'text-emerald-200' : 'text-gray-500 dark:text-gray-400';
 
   if (error) {
     return (
@@ -172,10 +182,10 @@ export default function DocumentList({ documents }: DocumentListProps) {
   }
 
   return (
-    <div className="h-screen overflow-y-auto flex flex-col bg-gray-50 dark:bg-gray-900">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div className={`h-full overflow-y-auto flex flex-col ${bgClass}`}>
+      <div className={`p-4 border-b ${borderClass} ${headerBgClass}`}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Documents</h2>
+          <h2 className={`text-lg font-semibold ${textClass}`}>Documents</h2>
           <div className="flex items-center gap-2">
             {isLoading && (
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent" />
@@ -189,7 +199,7 @@ export default function DocumentList({ documents }: DocumentListProps) {
             </button>
           </div>
         </div>
-        <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+        <div className={`text-sm ${subTextClass} truncate`}>
           {currentPath}
         </div>
       </div>

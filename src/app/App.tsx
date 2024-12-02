@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
-import DocumentList from './components/DocumentList';
-import Editor from './components/Editor';
-import Preview from './components/Preview';
-import Toolbar from './components/Toolbar';
-import DirectorySelector from './components/DirectorySelector';
-import { useEditorStore } from './store/editorStore';
-import { buildDocumentTree } from './utils/treeUtils';
+import DocumentList from '@/app/components/DocumentList';
+import Editor from '@/app/components/Editor';
+import Preview from '@/app/components/Preview';
+import Toolbar from '@/app/components/Toolbar';
+import DirectorySelector from '@/app/components/DirectorySelector';
+import { useEditorStore } from '@/app/store/editorStore';
+import { buildDocumentTree } from '@/app/utils/treeUtils';
 
 const MIN_PANEL_SIZE = 15;
 
@@ -19,6 +19,7 @@ export default function App() {
     showSidebar,
     showPreview,
     currentPath,
+    theme,
     setContent,
   } = useEditorStore();
 
@@ -32,43 +33,43 @@ export default function App() {
 
   const documentTree = buildDocumentTree(documents);
 
+  const themeClasses = {
+    default: 'bg-white',
+    dark: 'bg-gray-900',
+    green: 'bg-emerald-900',
+  };
+
   return (
-    <>
+    <div className={`h-full flex flex-col ${themeClasses[theme as keyof typeof themeClasses]}`}>
       <DirectorySelector
         isOpen={showDirectorySelector}
         onClose={() => setShowDirectorySelector(false)}
       />
 
-      <div className={`h-full relative`}>
-        <div className=" flex flex-col">
-          <Toolbar value={content} className={`h-32`} />
-          <div className="h-full flex-1">
-            <PanelGroup direction="horizontal">
-              {showSidebar && (
-                <>
-                  <Panel defaultSize={20} minSize={MIN_PANEL_SIZE}>
-                    <DocumentList documents={documentTree} />
-                  </Panel>
-                  <PanelResizeHandle
-                    className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
-                </>
-              )}
-              <Panel defaultSize={showPreview ? 40 : 80} minSize={30}>
-                <Editor value={content} onChange={setContent} />
+      <Toolbar value={content} />
+      <div className="flex-1 overflow-hidden">
+        <PanelGroup direction="horizontal">
+          {showSidebar && (
+            <>
+              <Panel defaultSize={20} minSize={MIN_PANEL_SIZE}>
+                <DocumentList documents={documentTree} />
               </Panel>
-              {showPreview && (
-                <>
-                  <PanelResizeHandle
-                    className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
-                  <Panel defaultSize={40} minSize={MIN_PANEL_SIZE}>
-                    <Preview content={content} />
-                  </Panel>
-                </>
-              )}
-            </PanelGroup>
-          </div>
-        </div>
+              <PanelResizeHandle className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
+            </>
+          )}
+          <Panel defaultSize={showPreview ? 40 : 80} minSize={30}>
+            <Editor value={content} onChange={setContent} />
+          </Panel>
+          {showPreview && (
+            <>
+              <PanelResizeHandle className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
+              <Panel defaultSize={40} minSize={MIN_PANEL_SIZE}>
+                <Preview content={content} />
+              </Panel>
+            </>
+          )}
+        </PanelGroup>
       </div>
-    </>
+    </div>
   );
 }

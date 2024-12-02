@@ -6,6 +6,8 @@ import { basePlugin } from '../plugins/base';
 import { darkThemePlugin } from '../plugins/dark-theme';
 import { mathPlugin } from '../plugins/math';
 import { fileSelectorPlugin } from '../plugins/file-selector';
+import { plantumlPlugin } from '../plugins/plantuml';
+import { greenThemePlugin } from '../plugins/green-theme';
 
 export const PluginManagerContext = createContext<PluginManager | null>(null);
 
@@ -21,6 +23,8 @@ export function PluginManagerProvider({ children }: { children: React.ReactNode 
         await pluginManager.installPlugin(darkThemePlugin);
         await pluginManager.installPlugin(mathPlugin);
         await pluginManager.installPlugin(fileSelectorPlugin);
+        await pluginManager.installPlugin(plantumlPlugin);
+        await pluginManager.installPlugin(greenThemePlugin);
         setIsInitialized(true);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to initialize plugins'));

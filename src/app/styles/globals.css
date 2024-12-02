@@ -3,8 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    @apply h-full w-full m-0 p-0 overflow-hidden;
+  }
+
   body {
     @apply antialiased;
+  }
+
+  #root {
+    @apply h-full w-full;
   }
 }
 
@@ -42,4 +50,52 @@
 
 .katex-error {
   @apply text-red-500 bg-red-50 dark:bg-red-900/20 p-2 rounded;
+}
+
+/* Green theme specific styles */
+[data-theme='green'] {
+  --bg-primary: theme('colors.emerald.900');
+  --bg-secondary: theme('colors.emerald.800');
+  --text-primary: theme('colors.emerald.100');
+  --text-secondary: theme('colors.emerald.200');
+}
+
+[data-theme='green'] .bg-white {
+  @apply bg-emerald-900;
+}
+
+[data-theme='green'] .bg-gray-50 {
+  @apply bg-emerald-800;
+}
+
+[data-theme='green'] .bg-gray-100 {
+  @apply bg-emerald-800;
+}
+
+[data-theme='green'] .text-gray-600 {
+  @apply text-emerald-200;
+}
+
+[data-theme='green'] .text-gray-700 {
+  @apply text-emerald-100;
+}
+
+[data-theme='green'] .border-gray-200 {
+  @apply border-emerald-700;
+}
+
+[data-theme='green'] .hover\:bg-gray-100:hover {
+  @apply hover:bg-emerald-800;
+}
+
+[data-theme='green'] .prose {
+  @apply text-emerald-100;
+}
+
+[data-theme='green'] .prose pre {
+  @apply bg-emerald-800;
+}
+
+[data-theme='green'] .prose code {
+  @apply bg-emerald-800 text-emerald-200;
 }

@@ -47,18 +47,23 @@ export const useEditorStore = create<EditorState>()(
       setCurrentPath: (currentPath) => set({ currentPath }),
       
       setTheme: (theme) => {
+        // Remove all theme classes first
+        document.documentElement.classList.remove('dark');
+        document.documentElement.removeAttribute('data-theme');
+
+        // Apply new theme
         if (theme === 'dark') {
           document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
+        } else if (theme === 'green') {
+          document.documentElement.setAttribute('data-theme', 'green');
         }
         set({ theme });
       },
 
       loadDirectory: async (path) => {
-          if (path === null) {
-            path = '';
-          }
+        if (path === null) {
+          path = '';
+        }
         set({ isLoading: true, error: null });
         try {
           const documents = await readDirectory(path);

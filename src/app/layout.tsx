@@ -1,5 +1,6 @@
 import { PluginManagerProvider } from '@/app/contexts/PluginManagerContext';
 import '@/app/styles/globals.css';
+import './globals.css';
 
 export const metadata = {
   title: 'Markdown Editor',

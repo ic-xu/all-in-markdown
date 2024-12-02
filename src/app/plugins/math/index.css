@@ -1,0 +1,19 @@
+/* KaTeX styles */
+.katex-display {
+  @apply overflow-x-auto overflow-y-hidden;
+  max-width: 100%;
+}
+
+.katex {
+  @apply text-current;
+  font-size: 1.1em;
+}
+
+.katex-display > .katex {
+  @apply my-4 mx-auto;
+  white-space: nowrap;
+}
+
+.katex-error {
+  @apply text-red-500 bg-red-50 dark:bg-red-900/20 p-2 rounded;
+}

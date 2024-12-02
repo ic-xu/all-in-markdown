@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {useEditorStore} from '../store/editorStore';
-import {usePluginManager} from '../hooks/usePluginManager';
+import React, { useEffect } from 'react';
+import { useEditorStore } from '../store/editorStore';
+import { usePluginManager } from '../hooks/usePluginManager';
 
 interface EditorProps {
   value: string;
@@ -8,7 +8,7 @@ interface EditorProps {
 }
 
 export default function Editor({ value, onChange }: EditorProps) {
-  const { selectedId,} = useEditorStore();
+  const { selectedId } = useEditorStore();
   
   const pluginManager = usePluginManager();
   const eventBus = pluginManager.getEventBus();
@@ -34,17 +34,13 @@ export default function Editor({ value, onChange }: EditorProps) {
     };
   }, [value, onChange, eventBus]);
 
-
-
   return (
     <div className="h-full flex-1 flex flex-col">
-
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="flex-1 p-4 resize-none focus:outline-none font-mono bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-        placeholder={selectedId ? "Start writing your markdown here..." : "Select a file to edit"}
-        disabled={!selectedId}
+        placeholder="Start writing your markdown here..."
       />
     </div>
   );

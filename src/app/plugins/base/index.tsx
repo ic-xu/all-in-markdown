@@ -1,29 +1,17 @@
 import React from 'react';
 import type { Plugin } from '../../types/plugin';
 import type { ReactElement } from 'react';
+import { HeadingComponent } from './HeadingComponet';
+import "./index.css";
 
-const HeadingComponent = ({ level, className, children }: { 
-  level: 1 | 2 | 3 | 4 | 5 | 6;
-  className: string;
-  children: React.ReactNode;
-}) => {
-  switch (level) {
-    case 1: return <h1 className={className}>{children}</h1>;
-    case 2: return <h2 className={className}>{children}</h2>;
-    case 3: return <h3 className={className}>{children}</h3>;
-    case 4: return <h4 className={className}>{children}</h4>;
-    case 5: return <h5 className={className}>{children}</h5>;
-    case 6: return <h6 className={className}>{children}</h6>;
-    default: return <h1 className={className}>{children}</h1>;
-  }
-};
+
 
 export const basePlugin: Plugin = {
   id: 'base',
   name: 'Base Plugin',
   version: '1.0.0',
   description: 'Provides basic markdown rendering capabilities',
-  
+
   async onActivate(context) {
     // Register basic markdown renderers
     context.registerRenderer({
@@ -53,7 +41,7 @@ export const basePlugin: Plugin = {
       id: 'bold',
       position: 'left',
       render: () => (
-        <button 
+        <button
           onClick={() => context.eventBus.emit('editor:format', 'bold')}
           className="p-2 hover:bg-gray-100 rounded"
         >
