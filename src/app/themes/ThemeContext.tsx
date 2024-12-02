@@ -16,6 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => { },
   getThemeClass: () => '',
 });
+export const useTheme = () => useContext(ThemeContext);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<ThemeDefinition>(defaultTheme);
@@ -26,7 +27,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [currentTheme])
 
   const setTheme = (themeId: string) => {
-    console.log("---------->>> ", themeId)
     const newTheme = themes[themeId];
     if (newTheme) {
       setCurrentTheme(newTheme);
@@ -54,4 +54,3 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useTheme = () => useContext(ThemeContext);
