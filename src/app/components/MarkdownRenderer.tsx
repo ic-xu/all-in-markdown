@@ -15,15 +15,43 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const pluginManager = usePluginManager();
   const renderers = pluginManager.getRenderers();
 
-  const components = renderers.reduce((acc: Record<string, any>, renderer) => {
-    acc[renderer.id] = ({ node, children }: { node: any; children: React.ReactNode }) => {
-      if (renderer.test(node)) {
-        return renderer.render(node, children);
+  const components = {
+    code: ({ node, inline, className, children, ...props }: any) => {
+      const match = /language-(\w+)/.exec(className || '');
+      const language = match ? match[1] : '';
+      
+      // Find a custom renderer for this code block
+      const customRenderer = renderers.find(renderer => 
+        renderer.test({ ...node, lang: language, type: 'code' })
+      );
+
+      if (customRenderer) {
+        return customRenderer.render({ ...node, lang: language, value: String(children).replace(/\n$/, '') }, null);
       }
-      return children;
-    };
-    return acc;
-  }, {});
+
+      // Default code rendering
+      return !inline ? (
+        <pre className={className} {...props}>
+          <code className={className} {...props}>
+            {children}
+          </code>
+        </pre>
+      ) : (
+        <code className={className} {...props}>
+          {children}
+        </code>
+      );
+    },
+    ...renderers.reduce((acc: Record<string, any>, renderer) => {
+      acc[renderer.id] = ({ node, children }: { node: any; children: React.ReactNode }) => {
+        if (renderer.test(node)) {
+          return renderer.render(node, children);
+        }
+        return children;
+      };
+      return acc;
+    }, {}),
+  };
 
   return (
     <ReactMarkdown

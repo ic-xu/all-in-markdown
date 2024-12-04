@@ -8,6 +8,8 @@ import { mathPlugin } from '../plugins/math';
 import { fileSelectorPlugin } from '../plugins/file-selector';
 import { plantumlPlugin } from '../plugins/plantuml';
 import { greenThemePlugin } from '../plugins/green-theme';
+import { syntaxHighlightPlugin } from '../plugins/syntax-highlight';
+import { mindmapPlugin } from '../plugins/mindmap';
 
 export const PluginManagerContext = createContext<PluginManager | null>(null);
 
@@ -25,6 +27,8 @@ export function PluginManagerProvider({ children }: { children: React.ReactNode 
         await pluginManager.installPlugin(fileSelectorPlugin);
         await pluginManager.installPlugin(plantumlPlugin);
         await pluginManager.installPlugin(greenThemePlugin);
+        // await pluginManager.installPlugin(syntaxHighlightPlugin);
+        await pluginManager.installPlugin(mindmapPlugin);
         setIsInitialized(true);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to initialize plugins'));

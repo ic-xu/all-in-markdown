@@ -1,9 +1,10 @@
 "use client"
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ThemeContextType, ThemeDefinition } from './types';
 import { defaultTheme } from './defaultTheme';
 import { darkTheme } from './darkTheme';
 import { greenTheme } from './greenTheme';
+import { useEditorStore } from '../store/editorStore';
 
 const themes: Record<string, ThemeDefinition> = {
   default: defaultTheme,
@@ -16,35 +17,23 @@ const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => { },
   getThemeClass: () => '',
 });
+
 export const useTheme = () => useContext(ThemeContext);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeDefinition>(defaultTheme);
-
+  const { theme: storeTheme, setTheme: setStoreTheme } = useEditorStore();
+  const [currentTheme, setCurrentTheme] = useState<ThemeDefinition>(themes[storeTheme] || defaultTheme);
 
   useEffect(() => {
-    console.log(currentTheme)
-  }, [currentTheme])
+    setCurrentTheme(themes[storeTheme] || defaultTheme);
+  }, [storeTheme]);
 
   const setTheme = (themeId: string) => {
-    const newTheme = themes[themeId];
-    if (newTheme) {
-      setCurrentTheme(newTheme);
-      // Remove all theme classes
-      document.documentElement.classList.remove('dark');
-      document.documentElement.removeAttribute('data-theme');
-
-      // Apply new theme
-      if (themeId === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else if (themeId !== 'default') {
-        document.documentElement.setAttribute('data-theme', themeId);
-      }
-    }
+    setStoreTheme(themeId as 'default' | 'dark' | 'green');
   };
 
   const getThemeClass = (type: keyof ThemeDefinition['styles'], variant: string): string => {
-    return currentTheme.styles[type][variant as keyof typeof currentTheme.styles[typeof type]];
+    return currentTheme.styles[type][variant as keyof typeof currentTheme.styles[typeof type]] || '';
   };
 
   return (
@@ -53,4 +42,3 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     </ThemeContext.Provider>
   );
 }
-

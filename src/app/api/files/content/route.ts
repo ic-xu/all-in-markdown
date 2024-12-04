@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
-import { validatePath } from '@/app/lib/security';
+import { validatePath } from '@/app/api/lib/security';
 
 export async function GET(request: NextRequest) {
   try {

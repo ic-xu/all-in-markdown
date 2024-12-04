@@ -1,4 +1,5 @@
 import { PluginManagerProvider } from '@/app/contexts/PluginManagerContext';
+import { ThemeProvider } from '@/app/themes/ThemeContext';
 import '@/app/styles/globals.css';
 import './globals.css';
 
@@ -13,10 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className='h-screen'>
-      <body>
+    <html lang="en" className="h-screen">
+      <body className="h-full">
         <PluginManagerProvider>
-          {children}
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
         </PluginManagerProvider>
       </body>
     </html>
