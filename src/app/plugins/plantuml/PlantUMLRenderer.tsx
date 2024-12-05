@@ -33,7 +33,7 @@ export default function PlantUMLRenderer({ content, serverUrl }: PlantUMLRendere
           <Image
             src={url}
             alt="PlantUML Diagram"
-            className="max-w-none h-[400px]"
+            className="max-w-none h-[400px] w-auto"
             loading="lazy"
             onError={() => setError('Failed to load PlantUML diagram')}
           />
