@@ -71,19 +71,24 @@ const nextConfig = {
     config.plugins.push({
       apply: (compiler) => {
         compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
-          compilation.hooks.optimizeChunkAssets.tap('MyPlugin', (chunks) => {
-            chunks.forEach((chunk) => {
-              chunk.files.forEach((file) => {
-                const hash = crypto.createHash('sha256');
-                hash.update(file);
-                const digest = hash.digest('hex');
-                console.log(`File: ${file}, Hash: ${digest}`);
+          compilation.hooks.processAssets.tap({
+            name: 'MyPlugin',
+            stage: compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+            // ... 其他配置 ...
+          }, (assets) => {
+            const chunks = assets.chunks; // 确保这是正确的获取方式
+            if (Array.isArray(chunks)) {
+              chunks.forEach(chunk => {
+                // 处理每个 chunk
               });
-            });
+            } else {
+              console.error('Expected chunks to be an array, but got:', chunks);
+            }
           });
         });
       },
     });
+
     return config;
   },
 };

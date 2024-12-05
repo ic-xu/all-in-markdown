@@ -1,6 +1,7 @@
 import React from 'react';
 import { Code2 } from 'lucide-react';
 import type { Plugin } from '../../types/plugin';
+import Prism from 'prismjs';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
 import 'prismjs/components/prism-markup';
@@ -31,8 +32,6 @@ export const syntaxHighlightPlugin: Plugin = {
   description: 'Adds syntax highlighting for code blocks',
 
   async onActivate(context) {
-    // 动态导入 Prism 库
-    const Prism = (await import('prismjs')).default;
 
     context.registerToolbarItem({
       id: 'insert-code',

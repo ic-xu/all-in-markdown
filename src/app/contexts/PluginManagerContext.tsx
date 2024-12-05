@@ -10,6 +10,7 @@ import { plantumlPlugin } from '../plugins/plantuml';
 import { greenThemePlugin } from '../plugins/green-theme';
 import { syntaxHighlightPlugin } from '../plugins/syntax-highlight';
 import { mindmapPlugin } from '../plugins/mindmap';
+import { todoPlugin } from '../plugins/todo';
 
 export const PluginManagerContext = createContext<PluginManager | null>(null);
 
@@ -27,8 +28,9 @@ export function PluginManagerProvider({ children }: { children: React.ReactNode 
         await pluginManager.installPlugin(fileSelectorPlugin);
         await pluginManager.installPlugin(plantumlPlugin);
         await pluginManager.installPlugin(greenThemePlugin);
-        // await pluginManager.installPlugin(syntaxHighlightPlugin);
+        await pluginManager.installPlugin(syntaxHighlightPlugin);
         await pluginManager.installPlugin(mindmapPlugin);
+        await pluginManager.installPlugin(todoPlugin);
         setIsInitialized(true);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to initialize plugins'));
