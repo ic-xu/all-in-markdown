@@ -5,6 +5,8 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { usePluginManager } from '../hooks/usePluginManager';
+import Mention from './Mention';
+import { parseMentions } from '../utils/mentionParser';
 import 'katex/dist/katex.min.css';
 
 interface MarkdownRendererProps {
@@ -16,11 +18,38 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const renderers = pluginManager.getRenderers();
 
   const components = {
+    p: ({ children }: { children: React.ReactNode }) => {
+      if (typeof children === 'string') {
+        const words = children.split(/(\s+)/);
+        return (
+          <p>
+            {words.map((word, index) => {
+              if (word.startsWith('@')) {
+                const username = word.slice(1);
+                return (
+                  <React.Fragment key={index}>
+                    <Mention 
+                      username={username}
+                      onClick={() => {
+                        // Handle mention click - can be expanded later
+                        console.log(`Clicked on @${username}`);
+                      }}
+                    />
+                    {' '}
+                  </React.Fragment>
+                );
+              }
+              return word;
+            })}
+          </p>
+        );
+      }
+      return <p>{children}</p>;
+    },
     code: ({ node, inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || '');
       const language = match ? match[1] : '';
       
-      // Find a custom renderer for this code block
       const customRenderer = renderers.find(renderer => 
         renderer.test({ ...node, lang: language, type: 'code' })
       );
@@ -29,7 +58,6 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         return customRenderer.render({ ...node, lang: language, value: String(children).replace(/\n$/, '') }, null);
       }
 
-      // Default code rendering
       return !inline ? (
         <pre className={className} {...props}>
           <code className={className} {...props}>

@@ -1,11 +1,10 @@
-'use client'
-
 import React, { useEffect, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import DocumentList from '@/app/components/DocumentList';
 import Editor from '@/app/components/Editor';
 import Preview from '@/app/components/Preview';
-import Toolbar from '@/app/components/Toolbar';
+import VerticalToolbar from '@/app/components/VerticalToolbar';
+import TopToolbar from '@/app/components/TopToolbar';
 import DirectorySelector from '@/app/components/DirectorySelector';
 import { useEditorStore } from '@/app/store/editorStore';
 import { buildDocumentTree } from '@/app/utils/treeUtils';
@@ -45,10 +44,10 @@ export default function App() {
         isOpen={showDirectorySelector}
         onClose={() => setShowDirectorySelector(false)}
       />
-
-      <Toolbar value={content} />
+      <TopToolbar value={content} />
       <div className="flex-1 overflow-hidden">
         <PanelGroup direction="horizontal">
+          <><VerticalToolbar /></>
           {showSidebar && (
             <>
               <Panel defaultSize={20} minSize={MIN_PANEL_SIZE}>
