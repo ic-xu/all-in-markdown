@@ -19,7 +19,7 @@ export const todoPlugin: Plugin = {
   async onActivate(context) {
     context.registerToolbarItem({
       id: 'insert-todo',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => {
@@ -37,7 +37,7 @@ export const todoPlugin: Plugin = {
     context.registerRenderer({
       id: 'todo-list',
       name: 'Todo List Renderer',
-      test: (node) => node.type === 'list' && node.children.some(child => 
+      test: (node) => node.type === 'list' && node.children.some(child =>
         child.type === 'listItem' && child.children[0]?.value?.includes('[ ]')
       ),
       render: (node, children) => {

@@ -15,7 +15,7 @@ export const mindmapPlugin: Plugin = {
   async onActivate(context) {
     context.registerToolbarItem({
       id: 'insert-mindmap',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => {

@@ -23,6 +23,7 @@ export default function TopToolbar({ value }: TopToolbarProps) {
   } = useEditorStore();
 
   const leftItems = toolbarItems.filter(item => item.position === 'left');
+  const mainItems = toolbarItems.filter(item => item.position === 'main');
   const rightItems = toolbarItems.filter(item =>
     item.position === 'right' &&
     !item.id.includes('theme-toggle')
@@ -59,7 +60,7 @@ export default function TopToolbar({ value }: TopToolbarProps) {
         >
           <PanelRightClose className="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </button>
-        {leftItems.map(item => (
+        {mainItems.map(item => (
           <div key={item.id}>{item.render()}</div>
         ))}
       </div>

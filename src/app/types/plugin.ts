@@ -45,7 +45,7 @@ export interface Theme {
 
 export interface ToolbarItem {
   id: string;
-  position: 'left' | 'right';
+  position: 'left' | 'right' | 'main';
   render: () => ReactElement;
 }
 

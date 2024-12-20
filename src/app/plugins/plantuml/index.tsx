@@ -24,7 +24,7 @@ export const plantumlPlugin: Plugin = {
 
     context.registerToolbarItem({
       id: 'insert-plantuml',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => {
@@ -47,7 +47,7 @@ Bob --> Alice: Hi!
     context.registerRenderer({
       id: 'plantuml',
       name: 'PlantUML Renderer',
-      test: (node) => 
+      test: (node) =>
         node.type === 'code' &&
         typeof node.lang === 'string' &&
         node.lang.toLowerCase() === 'plantuml',

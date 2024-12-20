@@ -12,7 +12,7 @@ export const fileSelectorPlugin: Plugin = {
     // Register toolbar item for file selection
     context.registerToolbarItem({
       id: 'file-selector',
-      position: 'left',
+      position: 'main',
       render: () => <FileSelector />,
     });
   },

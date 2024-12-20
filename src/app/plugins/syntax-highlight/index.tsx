@@ -35,7 +35,7 @@ export const syntaxHighlightPlugin: Plugin = {
 
     context.registerToolbarItem({
       id: 'insert-code',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => {

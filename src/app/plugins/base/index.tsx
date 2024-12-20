@@ -39,7 +39,7 @@ export const basePlugin: Plugin = {
     // Register basic toolbar items
     context.registerToolbarItem({
       id: 'bold',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => context.eventBus.emit('editor:format', 'bold')}

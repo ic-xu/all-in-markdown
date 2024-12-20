@@ -23,7 +23,7 @@ export const mathPlugin: Plugin = {
     // Register toolbar item for inserting math formulas
     context.registerToolbarItem({
       id: 'insert-math',
-      position: 'left',
+      position: 'main',
       render: () => (
         <button
           onClick={() => {
