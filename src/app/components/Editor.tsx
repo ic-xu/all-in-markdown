@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useEditorStore } from '../store/editorStore';
 import { usePluginManager } from '../hooks/usePluginManager';
+import TopToolbar from "./TopToolbar.tsx";
 
 interface EditorProps {
   value: string;
@@ -36,6 +37,7 @@ export default function Editor({ value, onChange }: EditorProps) {
 
   return (
     <div className="h-full flex-1 flex flex-col">
+      <TopToolbar value={value}/>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}

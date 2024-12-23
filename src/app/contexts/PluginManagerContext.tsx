@@ -11,7 +11,6 @@ import { greenThemePlugin } from '../plugins/green-theme';
 import { syntaxHighlightPlugin } from '../plugins/syntax-highlight';
 import { mindmapPlugin } from '../plugins/mindmap';
 import { todoPlugin } from '../plugins/todo';
-import { imChatPlugin } from '../plugins/im-chat';
 
 export const PluginManagerContext = createContext<PluginManager | null>(null);
 
@@ -32,7 +31,6 @@ export function PluginManagerProvider({ children }: { children: React.ReactNode 
         await pluginManager.installPlugin(syntaxHighlightPlugin);
         await pluginManager.installPlugin(mindmapPlugin);
         await pluginManager.installPlugin(todoPlugin);
-        await pluginManager.installPlugin(imChatPlugin);
         setIsInitialized(true);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to initialize plugins'));

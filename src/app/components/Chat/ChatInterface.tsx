@@ -64,9 +64,9 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="h-full bg-white dark:bg-gray-800 [data-theme='green']:bg-emerald-800">
+    <div className="h-full w-full  bg-white dark:bg-gray-800 [data-theme='green']:bg-emerald-800">
       <PanelGroup direction="horizontal">
-        <Panel defaultSize={20} minSize={MIN_CONVERSATION_SIZE}>
+        <Panel defaultSize={20} minSize={MIN_CONVERSATION_SIZE} order={1}>
           <ConversationList
             conversations={mockConversations}
             selectedId={selectedConversation}
@@ -74,7 +74,7 @@ export default function ChatInterface() {
           />
         </Panel>
         <PanelResizeHandle className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
-        <Panel minSize={MIN_CHAT_SIZE}>
+        <Panel minSize={MIN_CHAT_SIZE}  order={2}>
           <div className="h-full flex flex-col">
             <MessageList messages={messages} messagesEndRef={messagesEndRef} />
             <MessageInput

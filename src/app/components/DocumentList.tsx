@@ -71,7 +71,7 @@ interface DocumentListProps {
 
 export default function DocumentList({ documents }: DocumentListProps) {
   return (
-    <div className="h-full overflow-y-auto bg-white dark:bg-gray-800 ml-12">
+    <div className="h-full overflow-y-auto bg-white dark:bg-gray-800">
       <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Documents</h2>
       </div>
