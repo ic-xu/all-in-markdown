@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, FolderTree, BookOpen, GitBranch, Search } from 'lucide-react';
+import { FileText, FolderTree, BookOpen, GitBranch, Search, MessageCircle } from 'lucide-react';
 import { useEditorStore } from '@/app/store/editorStore';
 import ThemeSelector from '@/app/components/ThemeSelector';
 import Settings from '@/app/components/Settings';
@@ -7,19 +7,12 @@ import { usePluginManager } from '../hooks/usePluginManager';
 
 export default function VerticalToolbar() {
   const {
-    documents,
-    content,
     showSidebar,
-    showPreview,
-    currentPath,
-    theme,
-    setContent,
+    showChat,
     toggleSidebar,
-    togglePreview,
-    selectedId,
-    saveFile,
-    isLoading
+    toggleChat,
   } = useEditorStore();
+  
   const pluginManager = usePluginManager();
   const toolbarItems = pluginManager.getToolbarItems();
   const leftItems = toolbarItems.filter(item => item.position === 'left');
@@ -28,13 +21,31 @@ export default function VerticalToolbar() {
     !item.id.includes('theme-toggle')
   );
 
-
   return (
     <div className="fixed left-0 top-0 h-full w-10 bg-gray-100 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col items-center py-2 space-y-4">
-      <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
+      <button
+        className={`p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors ${
+          !showChat ? 'bg-gray-200 dark:bg-gray-700' : ''
+        }`}
+        onClick={() => showChat && toggleChat()}
+        title="Editor"
+      >
         <FileText className="w-5 h-5 text-gray-600 dark:text-gray-300" />
       </button>
-      <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors" onClick={toggleSidebar}>
+      <button
+        className={`p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors ${
+          showChat ? 'bg-gray-200 dark:bg-gray-700' : ''
+        }`}
+        onClick={() => !showChat && toggleChat()}
+        title="Chat"
+      >
+        <MessageCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+      </button>
+      <button
+        className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        onClick={toggleSidebar}
+        title={showSidebar ? "Hide Sidebar" : "Show Sidebar"}
+      >
         <FolderTree className="w-5 h-5 text-gray-600 dark:text-gray-300" />
       </button>
       <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
@@ -51,7 +62,9 @@ export default function VerticalToolbar() {
         <div key={item.id}>{item.render()}</div>
       ))}
       <div className="flex-1" />
-
+      {rightItems.map(item => (
+        <div key={item.id}>{item.render()}</div>
+      ))}
       <Settings />
     </div>
   );

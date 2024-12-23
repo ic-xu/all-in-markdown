@@ -6,6 +6,7 @@ import Preview from '@/app/components/Preview';
 import VerticalToolbar from '@/app/components/VerticalToolbar';
 import TopToolbar from '@/app/components/TopToolbar';
 import DirectorySelector from '@/app/components/DirectorySelector';
+import ChatInterface from '@/app/components/Chat/ChatInterface';
 import { useEditorStore } from '@/app/store/editorStore';
 import { buildDocumentTree } from '@/app/utils/treeUtils';
 
@@ -17,6 +18,7 @@ export default function App() {
     content,
     showSidebar,
     showPreview,
+    showChat,
     currentPath,
     theme,
     setContent,
@@ -46,7 +48,7 @@ export default function App() {
       />
       <TopToolbar value={content} />
       <div className="flex flex-1 overflow-hidden">
-        <><VerticalToolbar /></>
+        <VerticalToolbar />
         <PanelGroup direction="horizontal">
           {showSidebar && (
             <>
@@ -56,10 +58,10 @@ export default function App() {
               <PanelResizeHandle className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
             </>
           )}
-          <Panel id='editor' defaultSize={showPreview ? 40 : 80} minSize={30} order={2}>
-            <Editor value={content} onChange={setContent} />
+          <Panel id='editor' defaultSize={showPreview || showChat ? 40 : 80} minSize={30} order={2}>
+            {showChat ? <ChatInterface /> : <Editor value={content} onChange={setContent} />}
           </Panel>
-          {showPreview && (
+          {showPreview && !showChat && (
             <>
               <PanelResizeHandle className="w-1 hover:w-2 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-600 transition-all duration-150 cursor-col-resize" />
               <Panel id='preview' defaultSize={40} minSize={MIN_PANEL_SIZE} order={3}>
