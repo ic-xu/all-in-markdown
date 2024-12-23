@@ -33,7 +33,7 @@ export default function VerticalToolbar({className}: VerticalToolbarProps) {
         onClick={() => showChat && toggleChat()}
         title="Editor"
       >
-        <FileText className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        <FileText className="w-8 h-8 text-gray-600 dark:text-gray-300" />
       </button>
       <button
         className={`p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors ${
@@ -42,7 +42,7 @@ export default function VerticalToolbar({className}: VerticalToolbarProps) {
         onClick={() => !showChat && toggleChat()}
         title="Chat"
       >
-        <MessageCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        <MessageCircle className="w-8 h-8  text-gray-600 dark:text-gray-300" />
       </button>
       {/*<button*/}
       {/*  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"*/}
@@ -60,7 +60,7 @@ export default function VerticalToolbar({className}: VerticalToolbarProps) {
       {/*<button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">*/}
       {/*  <BookOpen className="w-5 h-5 text-gray-600 dark:text-gray-300" />*/}
       {/*</button>*/}
-      <div className={"relative"}>
+      <div className={"relative w-8 h-8  "}>
           <ThemeSelector />
       </div>
       {leftItems.map(item => (

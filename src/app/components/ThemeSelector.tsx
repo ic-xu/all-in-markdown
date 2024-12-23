@@ -28,10 +28,10 @@ export default function ThemeSelector() {
         <div className={`flex flex-row ${currentTheme.styles.background}`} ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={` flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors ${getThemeClass('text', 'secondary')}`}
+                className={`w-20 flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors ${getThemeClass('text', 'secondary')}`}
                 title="Change Theme"
             >
-                <ThemeIcon/>
+                <div className="w-8 h-8"><ThemeIcon/></div>
             </button>
 
             {isOpen && (
@@ -50,7 +50,7 @@ export default function ThemeSelector() {
                                 className={`w-full px-4 py-2 text-left flex items-center gap-2 ${getThemeClass('background', 'hover')}
                                     ${isSelected ? getThemeClass('background', 'secondary') : ''}`}
                             >
-                                <Icon className="w-4 h-4"/>
+                                <Icon className="w-8 h-8"/>
                                 <span className={getThemeClass('text', 'primary')}>{themeOption.name}</span>
                             </button>
                         );

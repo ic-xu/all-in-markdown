@@ -46,7 +46,7 @@ export default function App() {
                 isOpen={showDirectorySelector}
                 onClose={() => setShowDirectorySelector(false)}
             />
-                <VerticalToolbar className={"w-10"}/>
+                <VerticalToolbar className={"w-20"}/>
                 <div className="flex flex-1 items-start w-full h-full overflow-hidden">
                     {showChat ? (<ChatInterface/>) : (
                         <>
