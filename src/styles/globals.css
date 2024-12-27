@@ -3,12 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: #3B82F6;
+    --secondary: #10B981;
+  }
+
+  .dark {
+    --primary: #2563EB;
+    --secondary: #059669;
+  }
+
+  .green {
+    --primary: #059669;
+    --secondary: #047857;
+  }
+
   html, body {
     @apply h-full w-full m-0 p-0 overflow-hidden;
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased bg-white dark:bg-gray-900 green:bg-emerald-900 
+           text-gray-900 dark:text-white green:text-emerald-100;
   }
 
   #root {
@@ -21,11 +37,12 @@
 }
 
 .prose pre {
-  @apply bg-gray-50 p-4 rounded-lg;
+  @apply bg-gray-50 dark:bg-gray-800 green:bg-emerald-800 p-4 rounded-lg;
 }
 
 .prose code {
-  @apply text-sm bg-gray-50 px-1 py-0.5 rounded;
+  @apply text-sm bg-gray-50 dark:bg-gray-800 green:bg-emerald-800 
+         px-1 py-0.5 rounded text-gray-800 dark:text-gray-200 green:text-emerald-200;
 }
 
 .prose code::before,
@@ -33,69 +50,4 @@
   content: none;
 }
 
-.katex-display {
-  @apply overflow-x-auto overflow-y-hidden;
-  max-width: 100%;
-}
-
-.katex {
-  @apply text-current;
-  font-size: 1.1em;
-}
-
-.katex-display > .katex {
-  @apply my-4 mx-auto;
-  white-space: nowrap;
-}
-
-.katex-error {
-  @apply text-red-500 bg-red-50 dark:bg-red-900/20 p-2 rounded;
-}
-
-/* Green theme specific styles */
-[data-theme='green'] {
-  --bg-primary: theme('colors.emerald.900');
-  --bg-secondary: theme('colors.emerald.800');
-  --text-primary: theme('colors.emerald.100');
-  --text-secondary: theme('colors.emerald.200');
-}
-
-[data-theme='green'] .bg-white {
-  @apply bg-emerald-900;
-}
-
-[data-theme='green'] .bg-gray-50 {
-  @apply bg-emerald-800;
-}
-
-[data-theme='green'] .bg-gray-100 {
-  @apply bg-emerald-800;
-}
-
-[data-theme='green'] .text-gray-600 {
-  @apply text-emerald-200;
-}
-
-[data-theme='green'] .text-gray-700 {
-  @apply text-emerald-100;
-}
-
-[data-theme='green'] .border-gray-200 {
-  @apply border-emerald-700;
-}
-
-[data-theme='green'] .hover\:bg-gray-100:hover {
-  @apply hover:bg-emerald-800;
-}
-
-[data-theme='green'] .prose {
-  @apply text-emerald-100;
-}
-
-[data-theme='green'] .prose pre {
-  @apply bg-emerald-800;
-}
-
-[data-theme='green'] .prose code {
-  @apply bg-emerald-800 text-emerald-200;
-}
+/* Add more theme-specific styles as needed */

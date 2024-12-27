@@ -30,4 +30,11 @@ export default {
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      backgroundColor: ['dark', 'green'],
+      textColor: ['dark', 'green'],
+      borderColor: ['dark', 'green'],
+    },
+  },
 }

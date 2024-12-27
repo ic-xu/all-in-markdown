@@ -1,4 +1,3 @@
-"use client"
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ThemeContextType, ThemeDefinition } from './types';
 import { defaultTheme } from '@/themes/defaultTheme';

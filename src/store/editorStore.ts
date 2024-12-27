@@ -10,7 +10,7 @@ interface EditorState {
   showSidebar: boolean;
   showPreview: boolean;
   showChat: boolean;
-  theme: 'default' | 'dark' | 'green';
+  theme: string;
   currentPath: string | null;
   isLoading: boolean;
   error: string | null;

@@ -1,7 +1,6 @@
 import {AuthProvider} from './context/AuthContext';
 import {XMPPProvider} from './context/XMPPContext';
-// import {ThemeProvider} from './context/ThemeContext';
-import { ThemeProvider } from '@/themes/ThemeContext';
+import {ThemeProvider} from '@/themes/ThemeContext';
 import LoginPage from './pages/LoginPage';
 import {useAuth} from './context/AuthContext';
 import React from 'react';
@@ -15,15 +14,15 @@ const AppContent: React.FC = () => {
 
 function App() {
     return (
-        <PluginManagerProvider>
-            <ThemeProvider>
+        <ThemeProvider>
+            <PluginManagerProvider>
                 <AuthProvider>
                     <XMPPProvider>
                         <AppContent/>
                     </XMPPProvider>
                 </AuthProvider>
-            </ThemeProvider>
-        </PluginManagerProvider>
+            </PluginManagerProvider>
+        </ThemeProvider>
     );
 }
 

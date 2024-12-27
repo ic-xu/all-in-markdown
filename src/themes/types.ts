@@ -6,7 +6,7 @@ export interface ThemeDefinition {
     background: {
       primary: string;
       secondary: string;
-      hover: string;
+      hover: string,
     };
     text: {
       primary: string;

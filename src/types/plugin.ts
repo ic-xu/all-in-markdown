@@ -1,11 +1,12 @@
 import { EventEmitter } from 'eventemitter3';
 import { ReactElement, ReactNode } from 'react';
+import {ThemeDefinition} from "@/themes/types";
 
 export interface PluginContext {
   eventBus: EventEmitter;
   registerCommand: (command: Command) => void;
   registerRenderer: (renderer: MarkdownRenderer) => void;
-  registerTheme: (theme: Theme) => void;
+  registerTheme: (theme: ThemeDefinition) => void;
   registerToolbarItem: (item: ToolbarItem) => void;
   updateSettings: (settings: any) => void;
   getSettings: () => any;
@@ -37,11 +38,6 @@ export interface MarkdownRenderer {
   render: (node: any, children: ReactNode) => ReactElement;
 }
 
-export interface Theme {
-  id: string;
-  name: string;
-  styles: Record<string, string>;
-}
 
 export interface ToolbarItem {
   id: string;

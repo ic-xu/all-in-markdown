@@ -1,16 +1,16 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useTheme} from '@/themes/ThemeContext';
-import {defaultTheme} from '@/themes/defaultTheme';
-import {darkTheme} from '@/themes/darkTheme';
-import {greenTheme} from '@/themes/greenTheme';
+import {defaultTheme} from "@/themes/defaultTheme";
+import {darkTheme} from "@/themes/darkTheme";
+import {greenTheme} from "@/themes/greenTheme";
 
-const themes = [defaultTheme, darkTheme, greenTheme];
 
 export default function ThemeSelector() {
     const [isOpen, setIsOpen] = useState(false);
     const {currentTheme, setTheme, getThemeClass} = useTheme();
     const dropdownRef = useRef<HTMLDivElement>(null);
-    
+
+    const themes = [defaultTheme, darkTheme, greenTheme];
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -29,13 +29,15 @@ export default function ThemeSelector() {
         <div className={`${currentTheme.styles.background}`} ref={dropdownRef}>
                             <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className={`p-4 rounded-2xl transition-all duration-300 relative group text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/60 hover:text-primary hover:scale-100
-                    }`}                    title="Change Theme"
+                    className={`p-4 rounded-2xl transition-all duration-300 relative group
+                         text-gray-700 dark:text-gray-300 green:text-emerald-300
+                         hover:bg-gray-100 dark:hover:bg-gray-800/60 green:hover:bg-emerald-800/60 
+                         hover:text-primary hover:scale-105}`}title="Change Theme"
                 >
                     <div className="w-6 h-6"><ThemeIcon/></div>
                 </button>
                 {isOpen && (
-                    <div className={`absolute left-full w-48 ${getThemeClass('background', 'primary')} rounded-lg shadow-lg py-1`}>
+                    <div className={`absolute left-full w-48 ${getThemeClass('background', 'primary')} rounded-lg shadow-lg py-1 border border-gray-300`}>
                         {themes.map((themeOption) => {
                             const Icon = themeOption.icon;
                             const isSelected = currentTheme.id === themeOption.id;

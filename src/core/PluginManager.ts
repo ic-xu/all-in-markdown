@@ -1,12 +1,13 @@
 import { EventEmitter } from 'eventemitter3';
-import type { Plugin, PluginContext, Command, MarkdownRenderer, Theme, ToolbarItem } from '@/types/plugin';
+import type { Plugin, PluginContext, Command, MarkdownRenderer, ToolbarItem } from '@/types/plugin';
+import {ThemeDefinition} from "@/themes/types";
 
 export class PluginManager {
   private plugins: Map<string, Plugin> = new Map();
   private activePlugins: Set<string> = new Set();
   private commands: Map<string, Command> = new Map();
   private renderers: Map<string, MarkdownRenderer> = new Map();
-  private themes: Map<string, Theme> = new Map();
+  private themes: Map<string, ThemeDefinition> = new Map();
   private toolbarItems: Map<string, ToolbarItem> = new Map();
   private settings: Map<string, any> = new Map();
   private eventBus: EventEmitter;
@@ -20,7 +21,7 @@ export class PluginManager {
       eventBus: this.eventBus,
       registerCommand: (command: Command) => this.registerCommand(pluginId, command),
       registerRenderer: (renderer: MarkdownRenderer) => this.registerRenderer(pluginId, renderer),
-      registerTheme: (theme: Theme) => this.registerTheme(pluginId, theme),
+      registerTheme: (theme: ThemeDefinition) => this.registerTheme(pluginId, theme),
       registerToolbarItem: (item: ToolbarItem) => this.registerToolbarItem(pluginId, item),
       updateSettings: (settings: any) => this.updatePluginSettings(pluginId, settings),
       getSettings: () => this.getPluginSettings(pluginId),
@@ -146,7 +147,7 @@ export class PluginManager {
     this.renderers.set(`${pluginId}:${renderer.id}`, renderer);
   }
 
-  private registerTheme(pluginId: string, theme: Theme): void {
+  private registerTheme(pluginId: string, theme: ThemeDefinition): void {
     this.themes.set(`${pluginId}:${theme.id}`, theme);
   }
 
@@ -177,8 +178,8 @@ export class PluginManager {
     return Array.from(this.renderers.values());
   }
 
-  getThemes(): Theme[] {
-    return Array.from(this.themes.values());
+  getThemes(): Map<string, ThemeDefinition> {
+    return this.themes;
   }
 
   getToolbarItems(): ToolbarItem[] {

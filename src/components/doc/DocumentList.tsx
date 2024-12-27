@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronRight, ChevronDown, FileText, Folder, FolderOpen } from 'lucide-react';
 import { useEditorStore } from '@/store/editorStore';
 import type { DocumentTreeItem } from '@/types/document';
+import { useTheme } from '@/themes/ThemeContext';
 
 interface TreeNodeProps {
   item: DocumentTreeItem;
@@ -11,6 +12,7 @@ interface TreeNodeProps {
 function TreeNode({ item, level }: TreeNodeProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const { loadFile } = useEditorStore();
+  const { currentTheme } = useTheme();
 
   const handleSelect = () => {
     if (item.type === 'file') {
@@ -22,7 +24,7 @@ function TreeNode({ item, level }: TreeNodeProps) {
     <div>
       <div
         onClick={handleSelect}
-        className="flex items-center px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer group"
+        className={`flex items-center px-4 py-2 hover:${currentTheme.styles.background.secondary} cursor-pointer group transition-colors`}
         style={{ paddingLeft: `${(level + 1) * 16}px` }}
       >
         {item.type === 'folder' && (
@@ -42,14 +44,14 @@ function TreeNode({ item, level }: TreeNodeProps) {
         )}
         {item.type === 'folder' ? (
           isExpanded ? (
-            <FolderOpen className="w-4 h-4 text-blue-500 mr-2" />
+            <FolderOpen className="w-4 h-4 text-primary mr-2" />
           ) : (
-            <Folder className="w-4 h-4 text-blue-500 mr-2" />
+            <Folder className="w-4 h-4 text-primary mr-2" />
           )
         ) : (
-          <FileText className="w-4 h-4 text-gray-500 mr-2" />
+          <FileText className="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2" />
         )}
-        <span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">
+        <span className={`text-sm ${currentTheme.styles.text.primary} group-hover:${currentTheme.styles.text.secondary}`}>
           {item.title}
         </span>
       </div>
@@ -70,10 +72,12 @@ interface DocumentListProps {
 }
 
 export default function DocumentList({ documents }: DocumentListProps) {
+  const { currentTheme } = useTheme();
+
   return (
-    <div className="h-full overflow-y-auto bg-white dark:bg-gray-800">
-      <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Documents</h2>
+    <div className={`h-full overflow-y-auto ${currentTheme.styles.background.primary}`}>
+      <div className={`sticky top-0 ${currentTheme.styles.background.secondary} backdrop-blur-md border-b ${currentTheme.styles.border.primary} p-4`}>
+        <h2 className={`text-lg font-semibold ${currentTheme.styles.text.primary}`}>Documents</h2>
       </div>
       <div className="py-2">
         {documents.map((doc) => (

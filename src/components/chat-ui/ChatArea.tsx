@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useXMPP } from '@/context/XMPPContext';
 import { FaPaperPlane } from 'react-icons/fa';
 import MessageBubble from './MessageBubble';
+import { useTheme } from '@/themes/ThemeContext';
 
 const ChatArea: React.FC = () => {
   const { selectedContact, messages, sendMessage } = useXMPP();
   const [newMessage, setNewMessage] = useState('');
+  const { currentTheme } = useTheme();
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,8 +19,8 @@ const ChatArea: React.FC = () => {
 
   if (!selectedContact) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-dark/20 backdrop-blur-sm">
-        <p className="text-gray-500 dark:text-white/60 text-lg">Select a contact to start chatting</p>
+      <div className={`flex-1 flex items-center justify-center ${currentTheme.styles.background.primary} backdrop-blur-sm`}>
+        <p className={`text-gray-500 dark:text-white/60 text-lg ${currentTheme.styles.text.primary}`}>Select a contact to start chatting</p>
       </div>
     );
   }
@@ -27,9 +29,9 @@ const ChatArea: React.FC = () => {
     .filter(msg => msg.from === selectedContact.jid || msg.to === selectedContact.jid);
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-dark/20 backdrop-blur-sm">
-      <div className="p-6 border-b border-gray-200 dark:border-white/10">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+    <div className={`flex-1 flex flex-col ${currentTheme.styles.background.primary} backdrop-blur-sm`}>
+      <div className={`p-6 border-b ${currentTheme.styles.border.primary}`}>
+        <h2 className={`text-xl font-semibold ${currentTheme.styles.text.primary}`}>
           {selectedContact.name || selectedContact.jid}
         </h2>
       </div>
@@ -44,14 +46,14 @@ const ChatArea: React.FC = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSend} className="p-4 border-t border-gray-200 dark:border-white/10">
-        <div className="flex gap-3 bg-white dark:bg-white/5 p-2 rounded-xl shadow-sm">
+      <form onSubmit={handleSend} className={`p-4 border-t ${currentTheme.styles.border.primary}`}>
+        <div className={`flex gap-3 ${currentTheme.styles.background.secondary} p-2 rounded-xl shadow-sm`}>
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
-            className="flex-1 p-3 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/40 focus:outline-none"
+            className={`flex-1 p-3 bg-white dark:bg-gray-800 ${currentTheme.styles.text.primary} placeholder-gray-500 dark:placeholder-white/40 focus:outline-none`}
           />
           <button
             type="submit"

@@ -1,6 +1,6 @@
 import React from 'react';
 import CodeEditor from './CodeEditor';
-import { usePluginManager } from '@/app/hooks/usePluginManager';
+import { usePluginManager } from '@/hooks/usePluginManager';
 
 interface EditorProps {
   value: string;
